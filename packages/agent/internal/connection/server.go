@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/arman-develops/container-intrusion-detection/agent/internal/config"
+	"github.com/arman-develops/container-intrusion-detection/internal/config"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 )

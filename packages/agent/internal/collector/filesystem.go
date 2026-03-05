@@ -5,8 +5,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/arman-develops/container-intrusion-detection/agent/internal/config"
-	"github.com/arman-develops/container-intrusion-detection/agent/internal/models"
+	"github.com/arman-develops/container-intrusion-detection/internal/config"
+	"github.com/arman-develops/container-intrusion-detection/internal/models"
 	"github.com/sirupsen/logrus"
 )
 

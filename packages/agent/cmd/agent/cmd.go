@@ -8,10 +8,10 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/arman-develops/container-intrusion-detection/agent/internal/collector"
-	"github.com/arman-develops/container-intrusion-detection/agent/internal/config"
-	"github.com/arman-develops/container-intrusion-detection/agent/internal/connection"
-	"github.com/arman-develops/container-intrusion-detection/agent/internal/publisher"
+	"github.com/arman-develops/container-intrusion-detection/internal/collector"
+	"github.com/arman-develops/container-intrusion-detection/internal/config"
+	"github.com/arman-develops/container-intrusion-detection/internal/connection"
+	"github.com/arman-develops/container-intrusion-detection/internal/publisher"
 	"github.com/sirupsen/logrus"
 )
 
