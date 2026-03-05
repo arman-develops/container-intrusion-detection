@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  # RabbitMQ - receives telemetry from containers
+  rabbitmq:
+    image: rabbitmq:3.12-management-alpine
+    container_name: test-rabbitmq
+    ports:
+      - "5672:5672"    # AMQP port
+      - "15672:15672"  # Management UI
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin123
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+
+  # Simple telemetry consumer - dumps events to file
+  telemetry-consumer:
+    build:
+      context: ./test
+      dockerfile: Dockerfile.consumer
+    container_name: test-consumer
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    environment:
+      RABBITMQ_URL: amqp://admin:admin123@rabbitmq:5672/
+      OUTPUT_FILE: /data/telemetry.jsonl
+    volumes:
+      - ./test/output:/data
+    restart: unless-stopped
+
+  # Test application - dummy Hello World API
+  test-app:
+    build:
+      context: .
+      dockerfile: test/Dockerfile.app
+    container_name: test-app
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    ports:
+      - "3000:3000"    # Application port
+      - "8443:8443"    # Agent connection service
+    environment:
+      AGENT_API_KEY: test-api-key-123
+      RABBITMQ_URL: amqp://admin:admin123@rabbitmq:5672/
+      AGENT_LOG_LEVEL: debug
+    volumes:
+      - ./test/output:/var/log/container-ids
+
+volumes:
+  rabbitmq-data:

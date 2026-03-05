@@ -1,0 +1,14 @@
+FROM python:3.11-alpine
+
+WORKDIR /app
+
+# Install pika (RabbitMQ client)
+RUN pip install --no-cache-dir pika
+
+# Copy consumer script
+COPY consumer.py /app/consumer.py
+
+# Create output directory
+RUN mkdir -p /data
+
+CMD ["python", "-u", "consumer.py"]

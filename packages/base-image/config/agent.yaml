@@ -1,0 +1,59 @@
+agent:
+  api_key: "${3a8f6c52-9f44-4b78-b3c6-2a7e9d4c1f0b}"
+  host_id: "${HOST_ID}"
+  environment: "production"
+  log_level: "${AGENT_LOG_LEVEL:-info}"
+
+connection:
+  enabled: true
+  port: 8443
+  tls: false
+  # For production, mount TLS certs:
+  # cert_path: "/etc/container-ids/certs/tls.crt"
+  # key_path: "/etc/container-ids/certs/tls.key"
+
+rabbitmq:
+  url: "${RABBITMQ_URL}"
+  exchange: "container-ids"
+  routing_key: "telemetry"
+  exchange_type: "topic"
+  durable: true
+
+collector:
+  enable_syscalls: true
+  enable_network: true
+  enable_filesystem: true
+  enable_processes: true
+  
+  # Monitor specific syscalls
+  syscall_filter:
+    - execve
+    - open
+    - openat
+    - read
+    - write
+    - socket
+    - connect
+    - bind
+    - listen
+    - accept
+    - clone
+    - fork
+    - chmod
+    - chown
+    - setuid
+    - setgid
+  
+  # Sensitive paths to monitor closely
+  sensitive_paths:
+    - /etc/
+    - /root/
+    - /var/
+    - /proc/
+    - /sys/
+    - /home/
+    - /opt/
+  
+  # Performance tuning
+  batch_size: 100
+  flush_interval_ms: 1000
