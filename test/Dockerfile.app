@@ -1,5 +1,5 @@
 # Test application - Simple Hello World API built on Container IDS base image
-FROM container-ids-base:latest
+FROM armandevlops/container-ids-base:v1.0
 
 # Install Node.js on Alpine
 RUN apk add --no-cache nodejs npm

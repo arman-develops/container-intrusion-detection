@@ -2,7 +2,7 @@
 # Enterprises use this as their base: FROM your-registry/container-ids-base:latest
 
 # Multi-stage build for smaller final image
-FROM golang:1.21-alpine AS builder
+FROM golang:1.26-alpine AS builder
 
 # Install build dependencies
 RUN apk add --no-cache \
@@ -26,7 +26,7 @@ RUN CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build \
     ./cmd/agent
 
 # Final stage - minimal Alpine image
-FROM alpine:3.19
+FROM alpine:3.23
 
 LABEL maintainer="github.com/arman-develops"
 LABEL description="Container IDS monitoring base image - Alpine Linux"
@@ -69,7 +69,7 @@ RUN adduser -D -u 1000 -s /bin/bash appuser
 EXPOSE 8443
 
 # Environment variables (can be overridden)
-ENV AGENT_API_KEY="" \
+ENV AGENT_API_KEY="3a8f6c52-9f44-4b78-b3c6-2a7e9d4c1f0b" \
     RABBITMQ_URL="amqp://guest:guest@platform-rabbitmq:5672/" \
     AGENT_LOG_LEVEL="info" \
     CONNECTION_SERVICE_ENABLED="true" \
