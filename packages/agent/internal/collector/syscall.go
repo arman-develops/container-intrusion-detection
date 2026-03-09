@@ -16,7 +16,7 @@ package collector
 //	cd agent/internal/collector
 //	go generate ./...
 //
-//go:generate go run github.com/cilium/ebpf/cmd/bpf2go -cc clang -cflags "-O2 -g -Wall -target bpf -D__TARGET_ARCH_x86 -I./bpf" -output-dir . -package collector bpf ./bpf/probes.bpf.c
+//go:generate go run github.com/cilium/ebpf/cmd/bpf2go -cc clang -cflags "-O2 -g -Wall -target bpf -D__TARGET_ARCH_x86 -I./bpf" -output-dir .  bpf ./bpf/probes.bpf.c
 
 import (
 	"bufio"
