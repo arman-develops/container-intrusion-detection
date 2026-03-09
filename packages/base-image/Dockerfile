@@ -15,6 +15,9 @@ RUN apk add --no-cache \
     llvm \
     libbpf-dev
 
+ARG IMAGE_NAME="container-ids-base"
+ENV IMAGE_NAME="container-ids-base-img"
+
 # Build the agent
 WORKDIR /build
 COPY packages/agent /build
